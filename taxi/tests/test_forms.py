@@ -10,7 +10,6 @@ from ..forms import (
 class TestForms(TestCase):
     def setUp(self):
         self.test_driver_form = DriverCreationForm()
-        self.test_driver_license_form = DriverLicenseUpdateForm()
         self.test_search_form = SearchForm()
 
     def test_driver_creation_form_contains_expected_fields(self):
