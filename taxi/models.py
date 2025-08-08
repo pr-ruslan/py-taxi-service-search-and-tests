@@ -16,14 +16,11 @@ class Manufacturer(models.Model):
 
 
 class Driver(AbstractUser):
-    license_number = models.CharField(max_length=255,
-                                      unique=True,
-                                      validators=[
-                                          RegexValidator
-                                          (
-                                              regex=r"^[A-Z]{3}\d{5}$",
-                                          )
-                                      ])
+    license_number = models.CharField(
+        max_length=255,
+        unique=True,
+        validators=[RegexValidator(regex=r'^[A-Z]{3}\d{5}$')]
+    )
 
     class Meta:
         verbose_name = "driver"

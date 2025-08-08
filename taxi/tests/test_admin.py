@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.urls import reverse
 
 
 class TestAdminPanel(TestCase):
@@ -9,6 +10,6 @@ class TestAdminPanel(TestCase):
             password="<PASSWORD>",
         )
         self.client.force_login(self.admin_user)
-        url = "/admin/taxi/driver/"
+        url = reverse('admin:taxi_driver_changelist')
         res = self.client.get(url)
         self.assertContains(res, "License number")

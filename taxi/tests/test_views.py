@@ -74,7 +74,7 @@ class PrivateViewsTest(TestCase):
 
         response = self.client.get(
             reverse("taxi:manufacturer-list"),
-            {"title": "Ford"}
+            {"search_query": "Ford"}
         )
 
         self.assertEqual(len(response.context["manufacturer_list"]), 1)
@@ -87,7 +87,7 @@ class PrivateViewsTest(TestCase):
     def test_cars_search_form(self):
         response = self.client.get(
             reverse("taxi:car-list"),
-            {"title": "Model1"}
+            {"search_query": "Model1"}
         )
         self.assertEqual(len(response.context["car_list"]), 1)
         self.assertIn("Model1", str(response.content))
@@ -104,7 +104,7 @@ class PrivateViewsTest(TestCase):
         )
         response = self.client.get(
             reverse("taxi:driver-list"),
-            {"title": "another"})
+            {"search_query": "another"})
 
         self.assertEqual(len(response.context["driver_list"]), 1)
         self.assertEqual(response.context["driver_list"][0].username, "AnotherUserName")

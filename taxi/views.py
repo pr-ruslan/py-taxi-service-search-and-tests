@@ -40,10 +40,10 @@ class ManufacturerListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 5
 
     def get_context_data(self, **kwargs):
-        title = self.request.GET.get("title", "")
+        search_query = self.request.GET.get("search_query", "")
         context = super(ManufacturerListView, self).get_context_data(**kwargs)
         context["manufacturer_search_form"] = SearchForm(
-            initial={"title": title}
+            initial={"search_query": search_query}
         )
         return context
 
@@ -52,7 +52,7 @@ class ManufacturerListView(LoginRequiredMixin, generic.ListView):
         form = SearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(
-                name__icontains=form.cleaned_data["title"]
+                name__icontains=form.cleaned_data["search_query"]
             )
         return queryset
 
@@ -79,17 +79,17 @@ class CarListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        title = self.request.GET.get("title", "")
+        search_query = self.request.GET.get("search_query", "")
         context = super(CarListView, self).get_context_data(**kwargs)
-        context["car_search_form"] = SearchForm(initial={"title": title})
+        context["car_search_form"] = SearchForm(initial={"search_query": search_query})
         return context
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        title = self.request.GET.get("title")
-        if title:
+        search_query = self.request.GET.get("search_query")
+        if search_query:
             return queryset.filter(
-                model__icontains=title
+                model__icontains=search_query
             )
         return queryset
 
@@ -120,17 +120,17 @@ class DriverListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        title = self.request.GET.get("title")
+        search_query = self.request.GET.get("search_query")
         context = super(DriverListView, self).get_context_data(**kwargs)
-        context["driver_search_form"] = SearchForm(initial={"title": title})
+        context["driver_search_form"] = SearchForm(initial={"search_query": search_query})
         return context
 
     def get_queryset(self):
         queryset = super().get_queryset()
         form = SearchForm(self.request.GET)
         if form.is_valid():
-            title = form.cleaned_data["title"]
-            return queryset.filter(username__icontains=title)
+            search_query = form.cleaned_data["search_query"]
+            return queryset.filter(username__icontains=search_query)
         return queryset
 
 
@@ -152,7 +152,7 @@ class DriverLicenseUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 class DriverDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Driver
-    success_url = reverse_lazy("")
+    success_url = reverse_lazy("taxi:driver-list")
 
 
 @login_required

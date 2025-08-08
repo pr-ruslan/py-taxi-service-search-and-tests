@@ -10,7 +10,7 @@
   {% if car_list %}
     <form action="" method="get">
     {{ car_search_form|crispy }}
-    <input type="submit">
+    <button type="submit" class="btn btn-primary">Search</button>
     </form>
     <ul>
       {% for car in car_list %}
