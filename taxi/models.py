@@ -20,12 +20,10 @@ class Driver(AbstractUser):
                                       unique=True,
                                       validators=[
                                           RegexValidator
-                                              (
+                                          (
                                               regex=r"^[A-Z]{3}\d{5}$",
                                           )
-                                      ]
-                                      )
-
+                                      ])
 
     class Meta:
         verbose_name = "driver"

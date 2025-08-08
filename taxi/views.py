@@ -121,7 +121,7 @@ class DriverListView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         title = self.request.GET.get("title")
-        context = super(DriverListView,self).get_context_data(**kwargs)
+        context = super(DriverListView, self).get_context_data(**kwargs)
         context["driver_search_form"] = SearchForm(initial={"title": title})
         return context
 
@@ -132,6 +132,7 @@ class DriverListView(LoginRequiredMixin, generic.ListView):
             title = form.cleaned_data["title"]
             return queryset.filter(username__icontains=title)
         return queryset
+
 
 class DriverDetailView(LoginRequiredMixin, generic.DetailView):
     model = Driver

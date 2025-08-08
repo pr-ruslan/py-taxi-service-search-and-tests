@@ -22,7 +22,5 @@ class TestForms(TestCase):
         self.assertEqual(self.test_search_form.fields["title"].max_length, 50)
 
     def test_search_form_contains_expected_field(self):
-        expected_fields = {"title",}
+        expected_fields = {"title", }
         self.assertEqual(expected_fields, set(self.test_search_form.fields))
-
-

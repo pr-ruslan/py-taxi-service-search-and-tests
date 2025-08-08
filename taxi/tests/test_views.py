@@ -7,13 +7,11 @@ from ..models import Car, Manufacturer
 
 DETAIL_URL_NAMES = [
     "manufacturer-update",
-    #"manufacturers-delete",
     "car-detail",
     "car-update",
     "car-delete",
     "driver-detail",
     "driver-update",
-    #"driver-delete"
 ]
 
 GROUP_URL_NAMES = [
@@ -24,7 +22,7 @@ GROUP_URL_NAMES = [
     "car-create",
     "driver-list",
     "driver-create"
- ]
+]
 
 APP_NAME = "taxi"
 
@@ -41,7 +39,7 @@ class PublicViewTest(TestCase):
 
     def test_detail_view_login_required(self):
         for url_name in DETAIL_URL_NAMES:
-            url = reverse(f"{APP_NAME}:{url_name}", args = [1,])
+            url = reverse(f"{APP_NAME}:{url_name}", args=[1, ])
             res = self.client.get(url)
             self.assertNotEqual(res.status_code, 200)
 
@@ -49,10 +47,10 @@ class PublicViewTest(TestCase):
 class PrivateViewsTest(TestCase):
     def setUp(self):
         self.user = get_user_model().objects.create_user(
-            username='FirstUserName',
-            first_name='FirstName',
-            last_name='LastName',
-            email='Email@Address',
+            username="FirstUserName",
+            first_name="FirstName",
+            last_name="LastName",
+            email="Email@Address",
             license_number="ADM12345",
             password="<PASSWORD>",
         )
@@ -74,28 +72,39 @@ class PrivateViewsTest(TestCase):
         Manufacturer.objects.create(name="Ford", country="USA")
         Manufacturer.objects.create(name="Honda", country="Japan")
 
-        response = self.client.get(reverse("taxi:manufacturer-list"), {"title": "Ford"})
+        response = self.client.get(
+            reverse("taxi:manufacturer-list"),
+            {"title": "Ford"}
+        )
 
         self.assertEqual(len(response.context["manufacturer_list"]), 1)
         self.assertIn("Ford", str(response.content))
-        self.assertNotIn("Honda", str(response.content))
+        self.assertNotIn(
+            "Honda",
+            str(response.content)
+        )
 
     def test_cars_search_form(self):
-        response = self.client.get(reverse("taxi:car-list"), {"title": "Model1"})
+        response = self.client.get(
+            reverse("taxi:car-list"),
+            {"title": "Model1"}
+        )
         self.assertEqual(len(response.context["car_list"]), 1)
         self.assertIn("Model1", str(response.content))
         self.assertNotIn("Model2", str(response.content))
 
     def test_drivers_search_form(self):
         get_user_model().objects.create_user(
-            username='AnotherUserName',
-            first_name='SomeName',
-            last_name='LastName',
-            email='Email@Adress',
+            username="AnotherUserName",
+            first_name="SomeName",
+            last_name="LastName",
+            email="Email@Adress",
             license_number="ADM12346",
             password="<PASSWORD>",
         )
-        response = self.client.get(reverse("taxi:driver-list"), {"title": "another"})
+        response = self.client.get(
+            reverse("taxi:driver-list"),
+            {"title": "another"})
 
         self.assertEqual(len(response.context["driver_list"]), 1)
-        self.assertEqual(response.context["driver_list"][0].username,"AnotherUserName")
+        self.assertEqual(response.context["driver_list"][0].username, "AnotherUserName")

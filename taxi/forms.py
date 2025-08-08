@@ -36,5 +36,3 @@ class DriverLicenseUpdateForm(forms.ModelForm):
 class SearchForm(forms.Form):
     title = forms.CharField(max_length=50,
                             required=False,)
-
-

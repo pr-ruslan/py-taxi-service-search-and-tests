@@ -7,18 +7,19 @@ from taxi.models import (
     Car
 )
 
+
 class ModelTests(TestCase):
     def setUp(self):
         self.test_driver = get_user_model().objects.create_user(
-            username='UserName',
-            first_name='FirstName',
-            last_name='LastName',
-            email='Email@Address',
+            username="UserName",
+            first_name="FirstName",
+            last_name="LastName",
+            email="Email@Address",
             license_number="ADM12345",
             password="<PASSWORD>",
         )
         self.test_manufacturer = Manufacturer.objects.create(
-            name='Manufacturer',
+            name="Manufacturer",
             country="Country"
         )
 
@@ -30,7 +31,7 @@ class ModelTests(TestCase):
     def test_manufacturer_str(self):
         self.assertEqual(
             str(self.test_manufacturer),
-           f"{self.test_manufacturer.name} {self.test_manufacturer.country}"
+            f"{self.test_manufacturer.name} {self.test_manufacturer.country}"
         )
 
     def test_driver_str(self):
@@ -62,6 +63,7 @@ class ModelTests(TestCase):
 
     def test_driver_absolute_url(self):
         test_driver_absolute_url = self.test_driver.get_absolute_url()
-        self.assertEqual(test_driver_absolute_url,f"/drivers/{self.test_driver.id}/")
-
-    
+        self.assertEqual(
+            test_driver_absolute_url,
+            f"/drivers/{self.test_driver.id}/"
+        )
